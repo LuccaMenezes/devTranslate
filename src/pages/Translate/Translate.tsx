@@ -2,6 +2,10 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSpeechSynthesis } from 'react-speech-kit';
 
+import { FaVolumeUp } from 'react-icons/fa';
+
+
+import {ButtonTeste, Container, Textarea, Select, Borda} from './TranslateStyled'
 
 
 const Translate = () => {
@@ -48,42 +52,47 @@ const Translate = () => {
      }, [input]);
  
    return (
+    <Container>
+      <Borda>
     <div>
-    <div>
-      De ({from}) :
-      <select onChange={(e) => setFrom(e.target.value)}>
+      De: 
+      <Select onChange={(e) => setFrom(e.target.value)}>
         {options.map((opt) => (
           <option key={opt.code} value={opt.code}>
             {opt.name}
           </option>
         ))}
-      </select>
-      Para ({to}) :
-      <select onChange={(e) => setTo(e.target.value)}>
+      </Select>
+      Para: 
+      <Select onChange={(e) => setTo(e.target.value)}>
         {options.map((opt) => (
           <option key={opt.code} value={opt.code}>
             {opt.name}
           </option>
         ))}
-      </select>
+      </Select>
     </div>
     <div>
-      <textarea
+      <Textarea
         cols="50"
         rows="8"
         onInput={(e) => setInput(e.target.value)}
-      ></textarea>
+      ></Textarea>
     </div>
     <div>
-      <textarea cols="50" rows="8" value={output} ></textarea>
+    <Textarea cols="50" rows="8" value={output}>
+      <ButtonTeste onClick={(e) => speak({ text: output })}>
+        <FaVolumeUp />
+      </ButtonTeste>
+    </Textarea>
     </div>
     <div>
       <button onClick={e=>translate()}>Traduzir</button>
+      <button onClick={e => speak({ text: output })}><FaVolumeUp /></button>
     </div>
-    <div>
-      <button onClick={e => speak({ text: output })}>Ouvir</button>
-   </div>
-  </div>
+
+   </Borda>
+  </Container>
  );
  }
 
